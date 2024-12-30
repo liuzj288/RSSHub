@@ -267,14 +267,15 @@
         ],
         "location": "music/artist.ts"
       },
-      "/music/djradio/:id": {
-        "path": "/music/djradio/:id",
+      "/music/djradio/:id/:info?": {
+        "path": "/music/djradio/:id/:info?",
         "categories": [
           "multimedia"
         ],
         "example": "/163/music/djradio/347317067",
         "parameters": {
-          "id": "节目 id, 可在电台节目页 URL 中找到"
+          "id": "节目 id, 可在电台节目页 URL 中找到",
+          "info": "默认在正文尾部显示节目相关信息，任意值为不显示"
         },
         "features": {
           "requireConfig": false,
@@ -6059,6 +6060,75 @@
         ],
         "view": 0,
         "location": "news.ts"
+      },
+      "/zl/:category?": {
+        "path": "/zl/:category?",
+        "name": "大侠号",
+        "url": "www.ali213.net",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "example": "/ali213/zl",
+        "parameters": {
+          "category": "分类，默认为首页，可在对应分类页 URL 中找到"
+        },
+        "description": ":::tip\n若订阅 [游戏](https://www.ali213.net/news/zl/game/)，网址为 `https://www.ali213.net/news/zl/game/`，请截取 `https://www.ali213.net/news/zl/` 到末尾 `/` 的部分 `game` 作为 `category` 参数填入，此时目标路由为 [`/ali213/zl/game`](https://rsshub.app/ali213/zl/game)。\n:::\n\n| 首页                                     | 游戏                                         | 动漫                                           | 影视                                           | 娱乐                                           |\n| ---------------------------------------- | -------------------------------------------- | ---------------------------------------------- | ---------------------------------------------- | ---------------------------------------------- |\n| [index](https://www.ali213.net/news/zl/) | [game](https://www.ali213.net/news/zl/game/) | [comic](https://www.ali213.net/news/zl/comic/) | [movie](https://www.ali213.net/news/zl/movie/) | [amuse](https://www.ali213.net/news/zl/amuse/) |\n",
+        "categories": [
+          "game"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.ali213.net/news/zl/:category"
+            ]
+          },
+          {
+            "title": "首页",
+            "source": [
+              "www.ali213.net/news/zl/"
+            ],
+            "target": "/zl"
+          },
+          {
+            "title": "游戏",
+            "source": [
+              "www.ali213.net/news/zl/game/"
+            ],
+            "target": "/zl/game"
+          },
+          {
+            "title": "动漫",
+            "source": [
+              "www.ali213.net/news/zl/comic/"
+            ],
+            "target": "/zl/comic"
+          },
+          {
+            "title": "影视",
+            "source": [
+              "www.ali213.net/news/zl/movie/"
+            ],
+            "target": "/zl/movie"
+          },
+          {
+            "title": "娱乐",
+            "source": [
+              "www.ali213.net/news/zl/amuse/"
+            ],
+            "target": "/zl/amuse"
+          }
+        ],
+        "view": 0,
+        "location": "zl.ts"
       }
     },
     "name": "游侠网",
@@ -6752,6 +6822,34 @@
     "description": ":::tip\n官方提供了混合的主页资讯 RSS: [https://api.anquanke.com/data/v1/rss](https://api.anquanke.com/data/v1/rss)\n:::",
     "lang": "zh-CN"
   },
+  "anthropic": {
+    "routes": {
+      "/news": {
+        "path": "/news",
+        "categories": [
+          "programming"
+        ],
+        "example": "/anthropic/news",
+        "parameters": {},
+        "radar": [
+          {
+            "source": [
+              "anthropic.com"
+            ]
+          }
+        ],
+        "name": "News",
+        "maintainers": [
+          "etShaw-zh"
+        ],
+        "url": "anthropic.com/news",
+        "location": "news.ts"
+      }
+    },
+    "name": "Anthropic",
+    "url": "anthropic.com",
+    "lang": "en"
+  },
   "apache": {
     "routes": {
       "/apisix/blog": {
@@ -7086,6 +7184,27 @@
     },
     "name": "AP News",
     "url": "apnews.com",
+    "lang": "en"
+  },
+  "apnic": {
+    "routes": {
+      "/blog": {
+        "path": "/blog",
+        "categories": [
+          "blog"
+        ],
+        "example": "/apnic/blog",
+        "url": "blog.apnic.net",
+        "name": "Blog",
+        "maintainers": [
+          "p3psi-boo"
+        ],
+        "location": "index.ts"
+      }
+    },
+    "name": "APNIC",
+    "url": "blog.apnic.net",
+    "description": "Asia-Pacific Network Information Centre",
     "lang": "en"
   },
   "app-center": {
@@ -8969,7 +9088,8 @@
         "name": "News",
         "maintainers": [
           "HenryQW",
-          "DIYgod"
+          "DIYgod",
+          "pseudoyu"
         ],
         "example": "/bbc/world-asia",
         "parameters": {
@@ -9610,7 +9730,7 @@
         "example": "/bilibili/user/dynamic/2267573",
         "parameters": {
           "uid": "用户 id, 可在 UP 主主页中找到",
-          "routeParams": "\n| 键         | 含义                              | 接受的值       | 默认值 |\n| ---------- | --------------------------------- | -------------- | ------ |\n| showEmoji  | 显示或隐藏表情图片                | 0/1/true/false | false  |\n| embed      | 默认开启内嵌视频                  | 0/1/true/false |  true  |\n| useAvid    | 视频链接使用 AV 号 (默认为 BV 号) | 0/1/true/false | false  |\n| directLink | 使用内容直链                      | 0/1/true/false | false  |\n| hideGoods  | 隐藏带货动态                      | 0/1/true/false | false  |\n\n用例：`/bilibili/user/dynamic/2267573/showEmoji=1&embed=0&useAvid=1`"
+          "routeParams": "\n| 键         | 含义                              | 接受的值       | 默认值 |\n| ---------- | --------------------------------- | -------------- | ------ |\n| showEmoji  | 显示或隐藏表情图片                | 0/1/true/false | false  |\n| embed      | 默认开启内嵌视频                  | 0/1/true/false |  true  |\n| useAvid    | 视频链接使用 AV 号 (默认为 BV 号) | 0/1/true/false | false  |\n| directLink | 使用内容直链                      | 0/1/true/false | false  |\n| hideGoods  | 隐藏带货动态                      | 0/1/true/false | false  |\n| offset     | 偏移状态                         | string         | \"\"  |\n\n用例：`/bilibili/user/dynamic/2267573/showEmoji=1&embed=0&useAvid=1`"
         },
         "features": {
           "requireConfig": [
@@ -11715,7 +11835,7 @@
         "maintainers": [
           "nczitzk"
         ],
-        "description": "Categories\n\n  | Category               | Slug                |\n  | ---------------------- | ------------------- |\n  | All News               |                     |\n  | Diablo II: Resurrected | diablo2             |\n  | Diablo III             | diablo3             |\n  | Diablo IV              | diablo4             |\n  | Diablo: Immortal       | diablo-immortal     |\n  | Hearthstone            | hearthstone         |\n  | Heroes of the Storm    | heroes-of-the-storm |\n  | Overwatch 2            | overwatch           |\n  | StarCraft: Remastered  | starcraft           |\n  | StarCraft II           | starcraft2          |\n  | World of Warcraft      | world-of-warcraft   |\n  | Warcraft III: Reforged | warcraft3           |\n  | Battle.net             | battlenet           |\n  | BlizzCon               | blizzcon            |\n  | Inside Blizzard        | blizzard            |\n\n  Language codes\n\n  | Language           | Code  |\n  | ------------------ | ----- |\n  | Deutsch            | de-de |\n  | English (US)       | en-us |\n  | English (EU)       | en-gb |\n  | Español (EU)       | es-es |\n  | Español (Latino)   | es-mx |\n  | Français           | fr-fr |\n  | Italiano           | it-it |\n  | Português (Brasil) | pt-br |\n  | Polski             | pl-pl |\n  | Русский            | ru-ru |\n  | 한국어             | ko-kr |\n  | ภาษาไทย            | th-th |\n  | 日本語             | ja-jp |\n  | 繁體中文           | zh-tw |",
+        "description": "Categories\n\n  | Category               | Slug                |\n  | ---------------------- | ------------------- |\n  | All News               |                     |\n  | Diablo II: Resurrected | diablo2             |\n  | Diablo III             | diablo3             |\n  | Diablo IV              | diablo4             |\n  | Diablo Immortal        | diablo-immortal     |\n  | Hearthstone            | hearthstone         |\n  | Heroes of the Storm    | heroes-of-the-storm |\n  | Overwatch 2            | overwatch           |\n  | StarCraft: Remastered  | starcraft           |\n  | StarCraft II           | starcraft2          |\n  | World of Warcraft      | world-of-warcraft   |\n  | Warcraft 3: Reforged   | warcraft3           |\n  | Warcraft Rumble        | warcraft-rumble     |\n  | Battle.net             | battlenet           |\n  | BlizzCon               | blizzcon            |\n  | Inside Blizzard        | blizzard            |\n\n  Language codes\n\n  | Language           | Code  |\n  | ------------------ | ----- |\n  | Deutsch            | de-de |\n  | English (US)       | en-us |\n  | English (EU)       | en-gb |\n  | Español (EU)       | es-es |\n  | Español (Latino)   | es-mx |\n  | Français           | fr-fr |\n  | Italiano           | it-it |\n  | Português (Brasil) | pt-br |\n  | Polski             | pl-pl |\n  | Русский            | ru-ru |\n  | 한국어             | ko-kr |\n  | ภาษาไทย            | th-th |\n  | 日本語             | ja-jp |\n  | 繁體中文           | zh-tw |",
         "location": "news.ts"
       }
     },
@@ -16231,9 +16351,9 @@
         ],
         "example": "/chinacdc/zxyw",
         "parameters": {
-          "category": "分类，默认为 `zxyw`，即中心要闻，可在对应分类页 URL 中找到, Category, `zxyw`，即中心要闻 by default"
+          "category": "分类，默认为 `zxyw`，即中心要闻，可在对应分类页 URL 中找到，Category, `zxyw`，即中心要闻 by default"
         },
-        "description": ":::tip\n若订阅 [中心要闻](https://www.chinacdc.cn/zxyw/)，网址为 `https://www.chinacdc.cn/zxyw/`，请截取 `https://www.chinacdc.cn/` 到末尾 `/` 的部分 `zxyw` 作为 `category` 参数填入，此时目标路由为 [`/chinacdc/zxyw`](https://rsshub.app/chinacdc/zxyw)。\n:::\n\n| [中心要闻](https://www.chinacdc.cn/zxyw/) | [通知公告](https://www.chinacdc.cn/tzgg/) |\n| ----------------------------------------- | ----------------------------------------- |\n| [zxyw](https://rsshub.app/chinacdc/zxyw)  | [tzgg](https://rsshub.app/chinacdc/tzgg)  |\n\n<details>\n  <summary>更多分类</summary>\n\n#### [党建园地](https://www.chinacdc.cn/dqgz/djgz/)\n\n| [党建工作](https://www.chinacdc.cn/dqgz/djgz/)     | [廉政文化](https://www.chinacdc.cn/djgz_13611/)                | [工会工作](https://www.chinacdc.cn/ghgz/)          | [团青工作](https://www.chinacdc.cn/tqgz/)          | [理论学习](https://www.chinacdc.cn/tqgz_13618/)                |\n| -------------------------------------------------- | -------------------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------------------- |\n| [dqgz/djgz](https://rsshub.app/chinacdc/dqgz/djgz) | [dqgz/djgz_13611](https://rsshub.app/chinacdc/dqgz/djgz_13611) | [dqgz/ghgz](https://rsshub.app/chinacdc/dqgz/ghgz) | [dqgz/tqgz](https://rsshub.app/chinacdc/dqgz/tqgz) | [dqgz/tqgz_13618](https://rsshub.app/chinacdc/dqgz/tqgz_13618) |\n\n#### [疾控应急](https://www.chinacdc.cn/jkyj/)\n\n| [传染病](https://www.chinacdc.cn/jkyj/crb2/)       | [突发公共卫生事件](https://www.chinacdc.cn/jkyj/tfggws/) | [慢性病与伤害防控](https://www.chinacdc.cn/jkyj/mxfcrxjb2/)  | [烟草控制](https://www.chinacdc.cn/jkyj/yckz/)     | [营养与健康](https://www.chinacdc.cn/jkyj/yyyjk2/)     |\n| -------------------------------------------------- | -------------------------------------------------------- | ------------------------------------------------------------ | -------------------------------------------------- | ------------------------------------------------------ |\n| [jkyj/crb2](https://rsshub.app/chinacdc/jkyj/crb2) | [jkyj/tfggws](https://rsshub.app/chinacdc/jkyj/tfggws)   | [jkyj/mxfcrxjb2](https://rsshub.app/chinacdc/jkyj/mxfcrxjb2) | [jkyj/yckz](https://rsshub.app/chinacdc/jkyj/yckz) | [jkyj/yyyjk2](https://rsshub.app/chinacdc/jkyj/yyyjk2) |\n\n| [环境与健康](https://www.chinacdc.cn/jkyj/hjyjk/)    | [职业卫生与中毒控制](https://www.chinacdc.cn/jkyj/hjwsyzdkz/) | [放射卫生](https://www.chinacdc.cn/jkyj/fsws/)     | [免疫规划](https://www.chinacdc.cn/jkyj/mygh02/)       | [结核病防控](https://www.chinacdc.cn/jkyj/jhbfk/)    |\n| ---------------------------------------------------- | ------------------------------------------------------------- | -------------------------------------------------- | ------------------------------------------------------ | ---------------------------------------------------- |\n| [jkyj/hjyjk](https://rsshub.app/chinacdc/jkyj/hjyjk) | [jkyj/hjwsyzdkz](https://rsshub.app/chinacdc/jkyj/hjwsyzdkz)  | [jkyj/fsws](https://rsshub.app/chinacdc/jkyj/fsws) | [jkyj/mygh02](https://rsshub.app/chinacdc/jkyj/mygh02) | [jkyj/jhbfk](https://rsshub.app/chinacdc/jkyj/jhbfk) |\n\n| [寄生虫病](https://www.chinacdc.cn/jkyj/jscb/)     |\n| -------------------------------------------------- |\n| [jkyj/jscb](https://rsshub.app/chinacdc/jkyj/jscb) |\n\n#### [科学研究](https://www.chinacdc.cn/kxyj/)\n\n| [科技进展](https://www.chinacdc.cn/kxyj/kjjz/)     | [学术动态](https://www.chinacdc.cn/kxyj/xsdt/)     | [科研平台](https://www.chinacdc.cn/kxyj/xsjl/)     | [科研亮点](https://www.chinacdc.cn/kxyj/kyld/)     | [科技政策](https://www.chinacdc.cn/kxyj/kjzc/)     |\n| -------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------- |\n| [kxyj/kjjz](https://rsshub.app/chinacdc/kxyj/kjjz) | [kxyj/xsdt](https://rsshub.app/chinacdc/kxyj/xsdt) | [kxyj/xsjl](https://rsshub.app/chinacdc/kxyj/xsjl) | [kxyj/kyld](https://rsshub.app/chinacdc/kxyj/kyld) | [kxyj/kjzc](https://rsshub.app/chinacdc/kxyj/kjzc) |\n\n#### [教育培训](https://www.chinacdc.cn/jypx/)\n\n| [研究生院](https://www.chinacdc.cn/jypx/yjsy/)     | [继续教育](https://www.chinacdc.cn/jypx/jxjy/)     | [博士后](https://www.chinacdc.cn/jypx/bsh/)      | [中国现场流行病学培训项目（CFETP）](https://www.chinacdc.cn/jypx/CFETP/) |\n| -------------------------------------------------- | -------------------------------------------------- | ------------------------------------------------ | ------------------------------------------------------------------------ |\n| [jypx/yjsy](https://rsshub.app/chinacdc/jypx/yjsy) | [jypx/jxjy](https://rsshub.app/chinacdc/jypx/jxjy) | [jypx/bsh](https://rsshub.app/chinacdc/jypx/bsh) | [jypx/CFETP](https://rsshub.app/chinacdc/jypx/CFETP)                     |\n\n#### [全球公卫](https://www.chinacdc.cn/qqgw/)\n\n| [合作伙伴](https://www.chinacdc.cn/qqgw/hzhb/)     | [世界卫生组织合作中心和参比实验室](https://www.chinacdc.cn/qqgw/wszz/) | [国际交流(港澳台交流)](https://www.chinacdc.cn/qqgw/gjjl/) | [公共卫生援外与合作](https://www.chinacdc.cn/qqgw/ggws/) |\n| -------------------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------- | -------------------------------------------------------- |\n| [qqgw/hzhb](https://rsshub.app/chinacdc/qqgw/hzhb) | [qqgw/wszz](https://rsshub.app/chinacdc/qqgw/wszz)                     | [qqgw/gjjl](https://rsshub.app/chinacdc/qqgw/gjjl)         | [qqgw/ggws](https://rsshub.app/chinacdc/qqgw/ggws)       |\n\n#### [人才建设](https://www.chinacdc.cn/rcjs/)\n\n| [院士风采](https://www.chinacdc.cn/rcjs/ysfc/)     | [首席专家](https://www.chinacdc.cn/rcjs/sxzj/)     | [人才队伍](https://www.chinacdc.cn/rcjs/rcdw/)     | [人才招聘](https://www.chinacdc.cn/rcjs/rczp/)     |\n| -------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------- |\n| [rcjs/ysfc](https://rsshub.app/chinacdc/rcjs/ysfc) | [rcjs/sxzj](https://rsshub.app/chinacdc/rcjs/sxzj) | [rcjs/rcdw](https://rsshub.app/chinacdc/rcjs/rcdw) | [rcjs/rczp](https://rsshub.app/chinacdc/rcjs/rczp) |\n\n#### [健康数据](https://www.chinacdc.cn/jksj/)\n\n| [全国法定传染病疫情情况](https://www.chinacdc.cn/jksj/jksj01/) | [全国新型冠状病毒感染疫情情况](https://www.chinacdc.cn/jksj/xgbdyq/) | [重点传染病和突发公共卫生事件风险评估报告](https://www.chinacdc.cn/jksj/jksj02/) | [全球传染病事件风险评估报告](https://www.chinacdc.cn/jksj/jksj03/) | [全国预防接种异常反应监测信息概况](https://www.chinacdc.cn/jksj/jksj04_14209/) |\n| -------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------------------- | ------------------------------------------------------------------ | ------------------------------------------------------------------------------ |\n| [jksj/jksj01](https://rsshub.app/chinacdc/jksj/jksj01)         | [jksj/xgbdyq](https://rsshub.app/chinacdc/jksj/xgbdyq)               | [jksj/jksj02](https://rsshub.app/chinacdc/jksj/jksj02)                           | [jksj/jksj03](https://rsshub.app/chinacdc/jksj/jksj03)             | [jksj/jksj04_14209](https://rsshub.app/chinacdc/jksj/jksj04_14209)             |\n\n| [流感监测周报](https://www.chinacdc.cn/jksj/jksj04_14249/)         | [全国急性呼吸道传染病哨点监测情况](https://www.chinacdc.cn/jksj/jksj04_14275/) | [健康报告](https://www.chinacdc.cn/jksj/jksj04/)       |\n| ------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------ |\n| [jksj/jksj04_14249](https://rsshub.app/chinacdc/jksj/jksj04_14249) | [jksj/jksj04_14275](https://rsshub.app/chinacdc/jksj/jksj04_14275)             | [jksj/jksj04](https://rsshub.app/chinacdc/jksj/jksj04) |\n\n#### [健康科普](https://www.chinacdc.cn/jkkp/)\n\n| [传染病](https://www.chinacdc.cn/jkkp/crb/)      | [慢性非传染性疾病](https://www.chinacdc.cn/jkkp/mxfcrb/) | [免疫规划](https://www.chinacdc.cn/jkkp/mygh/)     | [公共卫生事件](https://www.chinacdc.cn/jkkp/ggws/) | [烟草控制](https://www.chinacdc.cn/jkkp/yckz/)     |\n| ------------------------------------------------ | -------------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------- |\n| [jkkp/crb](https://rsshub.app/chinacdc/jkkp/crb) | [jkkp/mxfcrb](https://rsshub.app/chinacdc/jkkp/mxfcrb)   | [jkkp/mygh](https://rsshub.app/chinacdc/jkkp/mygh) | [jkkp/ggws](https://rsshub.app/chinacdc/jkkp/ggws) | [jkkp/yckz](https://rsshub.app/chinacdc/jkkp/yckz) |\n\n| [营养与健康](https://www.chinacdc.cn/jkkp/yyjk/)   | [环境健康](https://www.chinacdc.cn/jkkp/hjjk/)     | [职业健康与中毒控制](https://www.chinacdc.cn/jkkp/zyjk/) | [放射卫生](https://www.chinacdc.cn/jkkp/fsws/)     |\n| -------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------- |\n| [jkkp/yyjk](https://rsshub.app/chinacdc/jkkp/yyjk) | [jkkp/hjjk](https://rsshub.app/chinacdc/jkkp/hjjk) | [jkkp/zyjk](https://rsshub.app/chinacdc/jkkp/zyjk)       | [jkkp/fsws](https://rsshub.app/chinacdc/jkkp/fsws) |\n\n</details>\n",
+        "description": ":::tip\n若订阅 [中心要闻](https://www.chinacdc.cn/zxyw/)，网址为 `https://www.chinacdc.cn/zxyw/`，请截取 `https://www.chinacdc.cn/` 到末尾 `/` 的部分 `zxyw` 作为 `category` 参数填入，此时目标路由为 [`/chinacdc/zxyw`](https://rsshub.app/chinacdc/zxyw)。\n:::\n\n| [中心要闻](https://www.chinacdc.cn/zxyw/) | [通知公告](https://www.chinacdc.cn/tzgg/) |\n| ----------------------------------------- | ----------------------------------------- |\n| [zxyw](https://rsshub.app/chinacdc/zxyw)  | [tzgg](https://rsshub.app/chinacdc/tzgg)  |\n\n<details>\n  <summary>更多分类</summary>\n\n#### [党建园地](https://www.chinacdc.cn/dqgz/djgz/)\n\n| [党建工作](https://www.chinacdc.cn/dqgz/djgz/)     | [廉政文化](https://www.chinacdc.cn/djgz_13611/)                | [工会工作](https://www.chinacdc.cn/ghgz/)          | [团青工作](https://www.chinacdc.cn/tqgz/)          | [理论学习](https://www.chinacdc.cn/tqgz_13618/)                |\n| -------------------------------------------------- | -------------------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------------------- |\n| [dqgz/djgz](https://rsshub.app/chinacdc/dqgz/djgz) | [dqgz/djgz_13611](https://rsshub.app/chinacdc/dqgz/djgz_13611) | [dqgz/ghgz](https://rsshub.app/chinacdc/dqgz/ghgz) | [dqgz/tqgz](https://rsshub.app/chinacdc/dqgz/tqgz) | [dqgz/tqgz_13618](https://rsshub.app/chinacdc/dqgz/tqgz_13618) |\n\n#### [疾控应急](https://www.chinacdc.cn/jkyj/)\n\n| [传染病](https://www.chinacdc.cn/jkyj/crb2/)       | [突发公共卫生事件](https://www.chinacdc.cn/jkyj/tfggws/) | [慢性病与伤害防控](https://www.chinacdc.cn/jkyj/mxfcrxjb2/)  | [烟草控制](https://www.chinacdc.cn/jkyj/yckz/)     | [营养与健康](https://www.chinacdc.cn/jkyj/yyyjk2/)     |\n| -------------------------------------------------- | -------------------------------------------------------- | ------------------------------------------------------------ | -------------------------------------------------- | ------------------------------------------------------ |\n| [jkyj/crb2](https://rsshub.app/chinacdc/jkyj/crb2) | [jkyj/tfggws](https://rsshub.app/chinacdc/jkyj/tfggws)   | [jkyj/mxfcrxjb2](https://rsshub.app/chinacdc/jkyj/mxfcrxjb2) | [jkyj/yckz](https://rsshub.app/chinacdc/jkyj/yckz) | [jkyj/yyyjk2](https://rsshub.app/chinacdc/jkyj/yyyjk2) |\n\n| [环境与健康](https://www.chinacdc.cn/jkyj/hjyjk/)    | [职业卫生与中毒控制](https://www.chinacdc.cn/jkyj/hjwsyzdkz/) | [放射卫生](https://www.chinacdc.cn/jkyj/fsws/)     | [免疫规划](https://www.chinacdc.cn/jkyj/mygh02/)       | [结核病防控](https://www.chinacdc.cn/jkyj/jhbfk/)    |\n| ---------------------------------------------------- | ------------------------------------------------------------- | -------------------------------------------------- | ------------------------------------------------------ | ---------------------------------------------------- |\n| [jkyj/hjyjk](https://rsshub.app/chinacdc/jkyj/hjyjk) | [jkyj/hjwsyzdkz](https://rsshub.app/chinacdc/jkyj/hjwsyzdkz)  | [jkyj/fsws](https://rsshub.app/chinacdc/jkyj/fsws) | [jkyj/mygh02](https://rsshub.app/chinacdc/jkyj/mygh02) | [jkyj/jhbfk](https://rsshub.app/chinacdc/jkyj/jhbfk) |\n\n| [寄生虫病](https://www.chinacdc.cn/jkyj/jscb/)     |\n| -------------------------------------------------- |\n| [jkyj/jscb](https://rsshub.app/chinacdc/jkyj/jscb) |\n\n#### [科学研究](https://www.chinacdc.cn/kxyj/)\n\n| [科技进展](https://www.chinacdc.cn/kxyj/kjjz/)     | [学术动态](https://www.chinacdc.cn/kxyj/xsdt/)     | [科研平台](https://www.chinacdc.cn/kxyj/xsjl/)     | [科研亮点](https://www.chinacdc.cn/kxyj/kyld/)     | [科技政策](https://www.chinacdc.cn/kxyj/kjzc/)     |\n| -------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------- |\n| [kxyj/kjjz](https://rsshub.app/chinacdc/kxyj/kjjz) | [kxyj/xsdt](https://rsshub.app/chinacdc/kxyj/xsdt) | [kxyj/xsjl](https://rsshub.app/chinacdc/kxyj/xsjl) | [kxyj/kyld](https://rsshub.app/chinacdc/kxyj/kyld) | [kxyj/kjzc](https://rsshub.app/chinacdc/kxyj/kjzc) |\n\n#### [教育培训](https://www.chinacdc.cn/jypx/)\n\n| [研究生院](https://www.chinacdc.cn/jypx/yjsy/)     | [继续教育](https://www.chinacdc.cn/jypx/jxjy/)     | [博士后](https://www.chinacdc.cn/jypx/bsh/)      | [中国现场流行病学培训项目（CFETP）](https://www.chinacdc.cn/jypx/CFETP/) |\n| -------------------------------------------------- | -------------------------------------------------- | ------------------------------------------------ | ------------------------------------------------------------------------ |\n| [jypx/yjsy](https://rsshub.app/chinacdc/jypx/yjsy) | [jypx/jxjy](https://rsshub.app/chinacdc/jypx/jxjy) | [jypx/bsh](https://rsshub.app/chinacdc/jypx/bsh) | [jypx/CFETP](https://rsshub.app/chinacdc/jypx/CFETP)                     |\n\n#### [全球公卫](https://www.chinacdc.cn/qqgw/)\n\n| [合作伙伴](https://www.chinacdc.cn/qqgw/hzhb/)     | [世界卫生组织合作中心和参比实验室](https://www.chinacdc.cn/qqgw/wszz/) | [国际交流 (港澳台交流)](https://www.chinacdc.cn/qqgw/gjjl/) | [公共卫生援外与合作](https://www.chinacdc.cn/qqgw/ggws/) |\n| -------------------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------- | -------------------------------------------------------- |\n| [qqgw/hzhb](https://rsshub.app/chinacdc/qqgw/hzhb) | [qqgw/wszz](https://rsshub.app/chinacdc/qqgw/wszz)                     | [qqgw/gjjl](https://rsshub.app/chinacdc/qqgw/gjjl)         | [qqgw/ggws](https://rsshub.app/chinacdc/qqgw/ggws)       |\n\n#### [人才建设](https://www.chinacdc.cn/rcjs/)\n\n| [院士风采](https://www.chinacdc.cn/rcjs/ysfc/)     | [首席专家](https://www.chinacdc.cn/rcjs/sxzj/)     | [人才队伍](https://www.chinacdc.cn/rcjs/rcdw/)     | [人才招聘](https://www.chinacdc.cn/rcjs/rczp/)     |\n| -------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------- |\n| [rcjs/ysfc](https://rsshub.app/chinacdc/rcjs/ysfc) | [rcjs/sxzj](https://rsshub.app/chinacdc/rcjs/sxzj) | [rcjs/rcdw](https://rsshub.app/chinacdc/rcjs/rcdw) | [rcjs/rczp](https://rsshub.app/chinacdc/rcjs/rczp) |\n\n#### [健康数据](https://www.chinacdc.cn/jksj/)\n\n| [全国法定传染病疫情情况](https://www.chinacdc.cn/jksj/jksj01/) | [全国新型冠状病毒感染疫情情况](https://www.chinacdc.cn/jksj/xgbdyq/) | [重点传染病和突发公共卫生事件风险评估报告](https://www.chinacdc.cn/jksj/jksj02/) | [全球传染病事件风险评估报告](https://www.chinacdc.cn/jksj/jksj03/) | [全国预防接种异常反应监测信息概况](https://www.chinacdc.cn/jksj/jksj04_14209/) |\n| -------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------------------- | ------------------------------------------------------------------ | ------------------------------------------------------------------------------ |\n| [jksj/jksj01](https://rsshub.app/chinacdc/jksj/jksj01)         | [jksj/xgbdyq](https://rsshub.app/chinacdc/jksj/xgbdyq)               | [jksj/jksj02](https://rsshub.app/chinacdc/jksj/jksj02)                           | [jksj/jksj03](https://rsshub.app/chinacdc/jksj/jksj03)             | [jksj/jksj04_14209](https://rsshub.app/chinacdc/jksj/jksj04_14209)             |\n\n| [流感监测周报](https://www.chinacdc.cn/jksj/jksj04_14249/)         | [全国急性呼吸道传染病哨点监测情况](https://www.chinacdc.cn/jksj/jksj04_14275/) | [健康报告](https://www.chinacdc.cn/jksj/jksj04/)       |\n| ------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------ |\n| [jksj/jksj04_14249](https://rsshub.app/chinacdc/jksj/jksj04_14249) | [jksj/jksj04_14275](https://rsshub.app/chinacdc/jksj/jksj04_14275)             | [jksj/jksj04](https://rsshub.app/chinacdc/jksj/jksj04) |\n\n#### [健康科普](https://www.chinacdc.cn/jkkp/)\n\n| [传染病](https://www.chinacdc.cn/jkkp/crb/)      | [慢性非传染性疾病](https://www.chinacdc.cn/jkkp/mxfcrb/) | [免疫规划](https://www.chinacdc.cn/jkkp/mygh/)     | [公共卫生事件](https://www.chinacdc.cn/jkkp/ggws/) | [烟草控制](https://www.chinacdc.cn/jkkp/yckz/)     |\n| ------------------------------------------------ | -------------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------- |\n| [jkkp/crb](https://rsshub.app/chinacdc/jkkp/crb) | [jkkp/mxfcrb](https://rsshub.app/chinacdc/jkkp/mxfcrb)   | [jkkp/mygh](https://rsshub.app/chinacdc/jkkp/mygh) | [jkkp/ggws](https://rsshub.app/chinacdc/jkkp/ggws) | [jkkp/yckz](https://rsshub.app/chinacdc/jkkp/yckz) |\n\n| [营养与健康](https://www.chinacdc.cn/jkkp/yyjk/)   | [环境健康](https://www.chinacdc.cn/jkkp/hjjk/)     | [职业健康与中毒控制](https://www.chinacdc.cn/jkkp/zyjk/) | [放射卫生](https://www.chinacdc.cn/jkkp/fsws/)     |\n| -------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------- |\n| [jkkp/yyjk](https://rsshub.app/chinacdc/jkkp/yyjk) | [jkkp/hjjk](https://rsshub.app/chinacdc/jkkp/hjjk) | [jkkp/zyjk](https://rsshub.app/chinacdc/jkkp/zyjk)       | [jkkp/fsws](https://rsshub.app/chinacdc/jkkp/fsws) |\n\n</details>\n",
         "categories": [
           "government"
         ],
@@ -16463,7 +16583,7 @@
             "target": "/qqgw/wszz"
           },
           {
-            "title": "全球公卫 - 国际交流(港澳台交流)",
+            "title": "全球公卫 - 国际交流 (港澳台交流)",
             "source": [
               "www.chinacdc.cn/qqgw/gjjl/"
             ],
@@ -19409,8 +19529,8 @@
   },
   "copernicium": {
     "routes": {
-      "/:category": {
-        "path": "/:category",
+      "/:category?": {
+        "path": "/:category?",
         "categories": [
           "new-media"
         ],
@@ -20512,6 +20632,35 @@
     },
     "name": "Curius",
     "url": "curius.app",
+    "lang": "en"
+  },
+  "cursor": {
+    "routes": {
+      "/changelog": {
+        "path": "/changelog",
+        "categories": [
+          "program-update"
+        ],
+        "example": "/cursor/changelog",
+        "url": "www.cursor.com/changelog",
+        "name": "Changelog",
+        "maintainers": [
+          "p3psi-boo"
+        ],
+        "radar": [
+          {
+            "source": [
+              "www.cursor.com/changelog"
+            ],
+            "target": "/cursor/changelog"
+          }
+        ],
+        "location": "changelog.ts"
+      }
+    },
+    "name": "Cursor",
+    "url": "www.cursor.com",
+    "description": "",
     "lang": "en"
   },
   "cw": {
@@ -22077,6 +22226,42 @@
     "name": "DeepMind",
     "url": "deepmind.com",
     "lang": "en"
+  },
+  "deepseek": {
+    "routes": {
+      "/news": {
+        "path": "/news",
+        "categories": [
+          "programming"
+        ],
+        "example": "/deepseek/news",
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "api-docs.deepseek.com"
+            ],
+            "target": "/news"
+          }
+        ],
+        "name": "新闻",
+        "maintainers": [
+          "1837634311"
+        ],
+        "location": "news.ts"
+      }
+    },
+    "name": "Deepseek",
+    "url": "api-docs.deepseek.com",
+    "description": "Deepseek API 文档。",
+    "lang": "zh-CN"
   },
   "dehenglaw": {
     "routes": {
@@ -25162,6 +25347,41 @@
       "government"
     ],
     "description": "德阳人事考试网",
+    "lang": "zh-CN"
+  },
+  "dytt": {
+    "routes": {
+      "/": {
+        "path": "/",
+        "categories": [
+          "multimedia"
+        ],
+        "example": "/dytt",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": true,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "ygdy8.net/index.html"
+            ]
+          }
+        ],
+        "name": "最新电影",
+        "maintainers": [
+          "junfengP"
+        ],
+        "location": "index.ts"
+      }
+    },
+    "name": "电影天堂",
+    "url": "www.ygdy8.net",
     "lang": "zh-CN"
   },
   "e-hentai": {
@@ -30433,6 +30653,73 @@
     "url": "gdsrx.org.cn",
     "lang": "zh-CN"
   },
+  "gdufs": {
+    "routes": {
+      "/news": {
+        "path": "/news",
+        "categories": [
+          "university"
+        ],
+        "example": "/gdufs/news",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.gdufs.edu.cn/gwxw/gwxw1.htm",
+              "www.gdufs.edu.cn/"
+            ]
+          }
+        ],
+        "name": "新闻",
+        "maintainers": [
+          "gz4zzxc"
+        ],
+        "url": "www.gdufs.edu.cn/gwxw/gwxw1.htm",
+        "location": "news.ts"
+      },
+      "/xwxy-news": {
+        "path": "/xwxy-news",
+        "categories": [
+          "university"
+        ],
+        "example": "/gdufs/xwxy-news",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "xwxy.gdufs.edu.cn/xwzx/xyxw",
+              "xwxy.gdufs.edu.cn/"
+            ]
+          }
+        ],
+        "name": "新闻学院-学院新闻",
+        "maintainers": [
+          "gz4zzxc"
+        ],
+        "url": "xwxy.gdufs.edu.cn/xwzx/xyxw",
+        "location": "xwxy/xwxy-news.ts"
+      }
+    },
+    "name": "广东外语外贸大学",
+    "url": "gdufs.edu.cn",
+    "lang": "zh-CN"
+  },
   "gdut": {
     "routes": {
       "/oa_news/:type?": {
@@ -33891,6 +34178,19 @@
         "name": "Unknown",
         "maintainers": [],
         "location": "gz/index.ts"
+      },
+      "/hainan/iitb/tzgg": {
+        "path": "/hainan/iitb/tzgg",
+        "categories": [
+          "government"
+        ],
+        "example": "/gov/hainan/iitb/tzgg",
+        "url": "iitb.hainan.gov.cn/iitb/tzgg/list2.shtml",
+        "name": "通知公告",
+        "maintainers": [
+          "p3psi-boo"
+        ],
+        "location": "hainan/iitb/tzgg.ts"
       },
       "/hebei/czt/xwdt/:category?": {
         "path": "/hebei/czt/xwdt/:category?",
@@ -38679,6 +38979,27 @@
     "url": "hex-rays.com",
     "lang": "en"
   },
+  "hexun": {
+    "routes": {
+      "/pe/news": {
+        "path": "/pe/news",
+        "categories": [
+          "finance"
+        ],
+        "example": "/hexun/pe/news",
+        "url": "pe.hexun.com/news/",
+        "name": "创投行业新闻",
+        "maintainers": [
+          "p3psi-boo"
+        ],
+        "location": "index.ts"
+      }
+    },
+    "name": "和讯网",
+    "url": "hexun.com",
+    "description": "",
+    "lang": "zh-CN"
+  },
   "hfut": {
     "routes": {
       "/hf/notice/:type?": {
@@ -38837,6 +39158,46 @@
     "name": "Sakamichi Series 坂道系列官网资讯",
     "url": "hinatazaka46.com",
     "lang": "zh-CN"
+  },
+  "hiring.cafe": {
+    "routes": {
+      "/jobs/:keywords": {
+        "path": "/jobs/:keywords",
+        "categories": [
+          "other"
+        ],
+        "example": "/hiring.cafe/jobs/sustainability",
+        "parameters": {
+          "keywords": "Keywords to search for"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "hiring.cafe"
+            ]
+          }
+        ],
+        "name": "Jobs",
+        "maintainers": [
+          "mintyfrankie"
+        ],
+        "location": "jobs.ts"
+      }
+    },
+    "name": "HiringCafe",
+    "url": "hiring.cafe",
+    "description": "HiringCafe is a platform for job seekers to find job opportunities and for employers to post job listings.",
+    "zh": {
+      "name": "HiringCafe"
+    }
   },
   "hit": {
     "routes": {
@@ -39518,6 +39879,25 @@
     "name": "湖南大学",
     "url": "scc.hnu.edu.cn",
     "lang": "zh-CN"
+  },
+  "home-assistant": {
+    "routes": {
+      "/hacs/repositories": {
+        "path": "/hacs/repositories",
+        "name": "HACS Repositories",
+        "maintainers": [
+          "DIYgod"
+        ],
+        "categories": [
+          "program-update"
+        ],
+        "example": "/home-assistant/hacs/repositories",
+        "location": "hacs.ts"
+      }
+    },
+    "name": "Home Assistant",
+    "url": "www.home-assistant.io",
+    "lang": "en"
   },
   "hongkong": {
     "routes": {
@@ -40733,6 +41113,37 @@
         ],
         "url": "huggingface.co/blog/zh",
         "location": "blog-zh.ts"
+      },
+      "/blog": {
+        "path": "/blog",
+        "categories": [
+          "programming"
+        ],
+        "example": "/huggingface/blog",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "huggingface.co/blog",
+              "huggingface.co/"
+            ]
+          }
+        ],
+        "name": "英文博客",
+        "maintainers": [
+          "cesaryuan",
+          "zcf0508"
+        ],
+        "url": "huggingface.co/blog",
+        "location": "blog.ts"
       },
       "/daily-papers": {
         "path": "/daily-papers",
@@ -42833,6 +43244,75 @@
     "url": "ielts.neea.cn",
     "lang": "zh-CN"
   },
+  "ifanr": {
+    "routes": {
+      "/category/:name": {
+        "path": "/category/:name",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/ifanr/category/早报",
+        "parameters": {
+          "name": "分类名称"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.ifanr.com/category/:name"
+            ]
+          }
+        ],
+        "name": "分类",
+        "maintainers": [
+          "donghongfei"
+        ],
+        "description": "支持分类：早报、评测、糖纸众测、产品",
+        "location": "category.ts"
+      },
+      "/index": {
+        "path": "/index",
+        "categories": [
+          "new-media"
+        ],
+        "view": 0,
+        "example": "/ifanr/index",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.ifanr.com/index"
+            ]
+          }
+        ],
+        "name": "首页",
+        "maintainers": [
+          "donghongfei"
+        ],
+        "url": "www.ifanr.com/index",
+        "location": "index.ts"
+      }
+    },
+    "name": "爱范儿",
+    "url": "www.ifanr.com",
+    "description": "",
+    "lang": "zh-CN"
+  },
   "ifeng": {
     "routes": {
       "/feng/:id/:type": {
@@ -44414,6 +44894,179 @@
   },
   "iresearch": {
     "routes": {
+      "/chart/:category?": {
+        "path": "/chart/:category?",
+        "name": "研究图表",
+        "url": "www.iresearch.com.cn",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "example": "/iresearch/chart",
+        "parameters": {
+          "category": "分类，见下表"
+        },
+        "description": "\n| 媒体文娱 | 广告营销   | 游戏行业 | 视频媒体  | 消费电商 |\n| -------- | ---------- | -------- | --------- | -------- |\n| 电子商务 | 消费者洞察 | 旅游行业 | 汽车行业  | 教育行业 |\n| 企业服务 | 网络服务   | 应用服务 | AI 大数据 | 人工智能 |\n| 物流行业 | 金融行业   | 支付行业 | 房产行业  | 医疗健康 |\n| 先进制造 | 新能源     | 区块链   | 其他      |          |\n",
+        "categories": [
+          "new-media"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "title": "研究图表 - 媒体文娱",
+            "source": [
+              "https://www.iresearch.com.cn/report.shtml"
+            ]
+          },
+          {
+            "title": "研究图表 - 广告营销",
+            "source": [
+              "https://www.iresearch.com.cn/report.shtml"
+            ]
+          },
+          {
+            "title": "研究图表 - 游戏行业",
+            "source": [
+              "https://www.iresearch.com.cn/report.shtml"
+            ]
+          },
+          {
+            "title": "研究图表 - 视频媒体",
+            "source": [
+              "https://www.iresearch.com.cn/report.shtml"
+            ]
+          },
+          {
+            "title": "研究图表 - 消费电商",
+            "source": [
+              "https://www.iresearch.com.cn/report.shtml"
+            ]
+          },
+          {
+            "title": "研究图表 - 电子商务",
+            "source": [
+              "https://www.iresearch.com.cn/report.shtml"
+            ]
+          },
+          {
+            "title": "研究图表 - 消费者洞察",
+            "source": [
+              "https://www.iresearch.com.cn/report.shtml"
+            ]
+          },
+          {
+            "title": "研究图表 - 旅游行业",
+            "source": [
+              "https://www.iresearch.com.cn/report.shtml"
+            ]
+          },
+          {
+            "title": "研究图表 - 汽车行业",
+            "source": [
+              "https://www.iresearch.com.cn/report.shtml"
+            ]
+          },
+          {
+            "title": "研究图表 - 教育行业",
+            "source": [
+              "https://www.iresearch.com.cn/report.shtml"
+            ]
+          },
+          {
+            "title": "研究图表 - 企业服务",
+            "source": [
+              "https://www.iresearch.com.cn/report.shtml"
+            ]
+          },
+          {
+            "title": "研究图表 - 网络服务",
+            "source": [
+              "https://www.iresearch.com.cn/report.shtml"
+            ]
+          },
+          {
+            "title": "研究图表 - 应用服务",
+            "source": [
+              "https://www.iresearch.com.cn/report.shtml"
+            ]
+          },
+          {
+            "title": "研究图表 - AI大数据",
+            "source": [
+              "https://www.iresearch.com.cn/report.shtml"
+            ]
+          },
+          {
+            "title": "研究图表 - 人工智能",
+            "source": [
+              "https://www.iresearch.com.cn/report.shtml"
+            ]
+          },
+          {
+            "title": "研究图表 - 物流行业",
+            "source": [
+              "https://www.iresearch.com.cn/report.shtml"
+            ]
+          },
+          {
+            "title": "研究图表 - 金融行业",
+            "source": [
+              "https://www.iresearch.com.cn/report.shtml"
+            ]
+          },
+          {
+            "title": "研究图表 - 支付行业",
+            "source": [
+              "https://www.iresearch.com.cn/report.shtml"
+            ]
+          },
+          {
+            "title": "研究图表 - 房产行业",
+            "source": [
+              "https://www.iresearch.com.cn/report.shtml"
+            ]
+          },
+          {
+            "title": "研究图表 - 医疗健康",
+            "source": [
+              "https://www.iresearch.com.cn/report.shtml"
+            ]
+          },
+          {
+            "title": "研究图表 - 先进制造",
+            "source": [
+              "https://www.iresearch.com.cn/report.shtml"
+            ]
+          },
+          {
+            "title": "研究图表 - 新能源",
+            "source": [
+              "https://www.iresearch.com.cn/report.shtml"
+            ]
+          },
+          {
+            "title": "研究图表 - 区块链",
+            "source": [
+              "https://www.iresearch.com.cn/report.shtml"
+            ]
+          },
+          {
+            "title": "研究图表 - 其他",
+            "source": [
+              "https://www.iresearch.com.cn/report.shtml"
+            ]
+          }
+        ],
+        "view": 0,
+        "location": "chart.ts"
+      },
       "/report": {
         "path": "/report",
         "categories": [
@@ -46031,6 +46684,93 @@
     "url": "m.okjike.com",
     "lang": "zh-CN"
   },
+  "jimmyspa": {
+    "routes": {
+      "/books/:language": {
+        "path": "/books/:language",
+        "categories": [
+          "design"
+        ],
+        "view": 0,
+        "example": "/jimmyspa/books/tw",
+        "parameters": {
+          "language": {
+            "description": "语言",
+            "options": [
+              {
+                "value": "tw",
+                "label": "臺灣正體"
+              },
+              {
+                "value": "en",
+                "label": "English"
+              },
+              {
+                "value": "jp",
+                "label": "日本語"
+              }
+            ]
+          }
+        },
+        "radar": [
+          {
+            "source": [
+              "www.jimmyspa.com/:language/Books"
+            ]
+          }
+        ],
+        "name": "Books",
+        "description": "\n| language | Description |\n| ---   | ---   |\n| tw | 臺灣正體 |\n| en | English |\n| jp | 日本語 |\n    ",
+        "maintainers": [
+          "FYLSen"
+        ],
+        "location": "books.ts"
+      },
+      "/news/:language": {
+        "path": "/news/:language",
+        "categories": [
+          "design"
+        ],
+        "view": 2,
+        "example": "/jimmyspa/news/tw",
+        "parameters": {
+          "language": {
+            "description": "语言",
+            "options": [
+              {
+                "value": "tw",
+                "label": "臺灣正體"
+              },
+              {
+                "value": "en",
+                "label": "English"
+              },
+              {
+                "value": "jp",
+                "label": "日本語"
+              }
+            ]
+          }
+        },
+        "radar": [
+          {
+            "source": [
+              "www.jimmyspa.com/:language/News"
+            ]
+          }
+        ],
+        "name": "News",
+        "description": "\n| language | Description |\n| ---   | ---   |\n| tw | 臺灣正體 |\n| en | English |\n| jp | 日本語 |\n    ",
+        "maintainers": [
+          "FYLSen"
+        ],
+        "location": "news.ts"
+      }
+    },
+    "name": "幾米 JIMMY S.P.A. Official Website",
+    "url": "www.jimmyspa.com",
+    "lang": "zh-TW"
+  },
   "jin10": {
     "routes": {
       "/:important?": {
@@ -46338,21 +47078,26 @@
   },
   "jisilu": {
     "routes": {
-      "/:category?/:sort?/:day?": {
-        "path": "/:category?/:sort?/:day?",
-        "categories": [
-          "bbs"
+      "/category/:id": {
+        "path": "/category/:id",
+        "name": "分类",
+        "url": "www.jisilu.cn",
+        "maintainers": [
+          "nczitzk"
         ],
-        "example": "/jisilu",
+        "example": "/jisilu/category/4",
         "parameters": {
-          "category": "分类，见下表，默认为全部，可在 URL 中找到",
-          "sort": "排序，见下表，默认为最新，可在 URL 中找到",
-          "day": "几天内，见下表，默认为30天，本参数仅在排序参数设定为 `热门` 后才可生效"
+          "id": "分类 id，可在对应分类页 URL 中找到"
         },
+        "description": ":::tip\n若订阅 [债券/可转债](https://www.jisilu.cn/category/4)，网址为 `https://www.jisilu.cn/category/4`，请截取 `https://www.jisilu.cn/category/` 到末尾的部分 `4` 作为 `id` 参数填入，此时目标路由为 [`/jisilu/category/4`](https://rsshub.app/jisilu/category/4)。\n:::\n\n| 新股 | 债券/可转债 | 套利 | 其他 | 基金 | 股票 |\n| ---- | ----------- | ---- | ---- | ---- | ---- |\n| 3    | 4           | 5    | 6    | 7    | 8    |\n",
+        "categories": [
+          "finance"
+        ],
         "features": {
           "requireConfig": false,
           "requirePuppeteer": false,
           "antiCrawler": false,
+          "supportRadar": true,
           "supportBT": false,
           "supportPodcast": false,
           "supportScihub": false
@@ -46360,23 +47105,167 @@
         "radar": [
           {
             "source": [
-              "jisilu.cn/home/explore",
-              "jisilu.cn/explore",
-              "jisilu.cn/"
-            ]
+              "www.jisilu.cn/category/:id"
+            ],
+            "target": "/category/:id"
+          },
+          {
+            "title": "新股",
+            "source": [
+              "www.jisilu.cn/category/3"
+            ],
+            "target": "/category/3"
+          },
+          {
+            "title": "债券/可转债",
+            "source": [
+              "www.jisilu.cn/category/4"
+            ],
+            "target": "/category/4"
+          },
+          {
+            "title": "套利",
+            "source": [
+              "www.jisilu.cn/category/5"
+            ],
+            "target": "/category/5"
+          },
+          {
+            "title": "其他",
+            "source": [
+              "www.jisilu.cn/category/6"
+            ],
+            "target": "/category/6"
+          },
+          {
+            "title": "基金",
+            "source": [
+              "www.jisilu.cn/category/7"
+            ],
+            "target": "/category/7"
+          },
+          {
+            "title": "股票",
+            "source": [
+              "www.jisilu.cn/category/8"
+            ],
+            "target": "/category/8"
           }
         ],
+        "view": 0,
+        "location": "category.ts"
+      },
+      "/explore/:filter?": {
+        "path": "/explore/:filter?",
         "name": "广场",
+        "url": "www.jisilu.cn",
         "maintainers": [
           "nczitzk"
         ],
-        "url": "jisilu.cn/home/explore",
-        "description": "分类\n\n  | 全部 | 债券 / 可转债 | 基金 | 套利 | 新股 |\n  | ---- | ------------- | ---- | ---- | ---- |\n  |      | 4             | 7    | 5    | 3    |\n\n  排序\n\n  | 最新 | 热门 | 按发表时间 |\n  | ---- | ---- | ---------- |\n  |      | hot  | add_time  |\n\n  几天内\n\n  | 30 天 | 7 天 | 当天 |\n  | ----- | ---- | ---- |\n  | 30    | 7    | 1    |",
-        "location": "index.ts"
+        "example": "/jisilu/explore",
+        "parameters": {
+          "category": "过滤器，默认为空，可在对应页 URL 中找到"
+        },
+        "description": ":::tip\n若订阅 [债券/可转债 - 热门 - 30天](https://www.jisilu.cn/home/explore/category-4__sort_type-hot__day-30)，网址为 `https://www.jisilu.cn/home/explore/category-4__sort_type-hot__day-30`，请截取 `https://www.jisilu.cn/home/explore/` 到末尾的部分 `category-4__sort_type-hot__day-30` 作为 `filter` 参数填入，此时目标路由为 [`/jisilu/explore/category-4__sort_type-hot__day-30`](https://rsshub.app/jisilu/explore/category-4__sort_type-hot__day-30)。\n:::\n    ",
+        "categories": [
+          "finance"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.jisilu.cn/home/explore/:filter",
+              "www.jisilu.cn/home/explore",
+              "www.jisilu.cn/explore"
+            ]
+          }
+        ],
+        "view": 0,
+        "location": "explore.ts"
+      },
+      "/people/:id/:type?": {
+        "path": "/people/:id/:type?",
+        "name": "用户",
+        "url": "www.jisilu.cn",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "example": "/jisilu/people/天书",
+        "parameters": {
+          "id": "用户 id，可在对应用户页 URL 中找到",
+          "type": "类型，可选值为 `questions` 即 `主题` 或 `answer` 即 `回复`，默认为 `questions` 即 `主题`"
+        },
+        "description": ":::tip\n若订阅 [天书的主题](https://www.jisilu.cn/people/天书)，网址为 `https://www.jisilu.cn/people/天书`，请截取 `https://www.jisilu.cn/people/` 到末尾的部分 `天书` 作为 `id` 参数填入，此时目标路由为 [`/jisilu/people/天书`](https://rsshub.app/jisilu/people/天书)。\n:::\n\n:::tip\n前往 [用户排名](https://www.jisilu.cn/users/) 查看更多用户。\n:::\n",
+        "categories": [
+          "finance"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.jisilu.cn/people/:id"
+            ],
+            "target": "/people/:id"
+          }
+        ],
+        "view": 0,
+        "location": "people.ts"
+      },
+      "/topic/:id": {
+        "path": "/topic/:id",
+        "name": "话题",
+        "url": "www.jisilu.cn",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "example": "/jisilu/topic/可转债",
+        "parameters": {
+          "id": "话题 id，可在对应话题页 URL 中找到"
+        },
+        "description": ":::tip\n若订阅 [可转债](https://www.jisilu.cn/topic/可转债)，网址为 `https://www.jisilu.cn/topic/可转债`，请截取 `https://www.jisilu.cn/topic/` 到末尾的部分 `可转债` 作为 `id` 参数填入，此时目标路由为 [`/jisilu/topic/可转债`](https://rsshub.app/jisilu/topic/可转债)。\n:::\n\n:::tip\n前往 [话题广场](https://www.jisilu.cn/topic) 查看更多话题。\n:::\n",
+        "categories": [
+          "finance"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.jisilu.cn/topic/:id"
+            ],
+            "target": "/topic/:id"
+          }
+        ],
+        "view": 0,
+        "location": "topic.ts"
       }
     },
     "name": "集思录",
     "url": "jisilu.cn",
+    "description": "一个以数据为本的投资社区",
     "lang": "zh-CN"
   },
   "jiuyangongshe": {
@@ -46983,6 +47872,123 @@
     },
     "name": "极品性感美女",
     "url": "www.jpxgmn.com",
+    "lang": "zh-CN"
+  },
+  "jrj": {
+    "routes": {
+      "/:channelNum": {
+        "path": "/:channelNum",
+        "categories": [
+          "finance"
+        ],
+        "example": "/jrj/103",
+        "parameters": {
+          "channelNum": {
+            "description": "栏目编号",
+            "options": [
+              {
+                "value": "102",
+                "label": "美股资讯"
+              },
+              {
+                "value": "103",
+                "label": "财经资讯"
+              },
+              {
+                "value": "104",
+                "label": "基金资讯"
+              },
+              {
+                "value": "105",
+                "label": "观点"
+              },
+              {
+                "value": "106",
+                "label": "商业资讯"
+              },
+              {
+                "value": "107",
+                "label": "期货资讯"
+              },
+              {
+                "value": "112",
+                "label": "信托资讯"
+              },
+              {
+                "value": "113",
+                "label": "银行资讯"
+              },
+              {
+                "value": "115",
+                "label": "保险资讯"
+              },
+              {
+                "value": "118",
+                "label": "债券资讯"
+              },
+              {
+                "value": "119",
+                "label": "康养资讯"
+              },
+              {
+                "value": "503",
+                "label": "私募资讯"
+              },
+              {
+                "value": "508",
+                "label": "科技资讯"
+              },
+              {
+                "value": "603",
+                "label": "券商资讯"
+              },
+              {
+                "value": "629",
+                "label": "ESG 资讯"
+              },
+              {
+                "value": "630",
+                "label": "医疗资讯"
+              },
+              {
+                "value": "632",
+                "label": "消费资讯"
+              },
+              {
+                "value": "004",
+                "label": "汽车资讯"
+              },
+              {
+                "value": "009",
+                "label": "房产资讯"
+              },
+              {
+                "value": "010",
+                "label": "A股资讯"
+              },
+              {
+                "value": "001",
+                "label": "港股资讯"
+              },
+              {
+                "value": "007",
+                "label": "外汇资讯"
+              }
+            ]
+          }
+        },
+        "url": "www.jrj.com.cn",
+        "name": "资讯",
+        "description": "\n| column | Description |\n| ---   | ---   |\n| 103   | 财经资讯 |\n| 508   | 科技资讯 |\n| 106   | 商业资讯 |\n| 632   | 消费资讯 |\n| 630   | 医疗资讯 |\n| 119   | 康养资讯 |\n| 004   | 汽车资讯 |\n| 009   | 房产资讯 |\n| 629   | ESG 资讯 |\n| 001   | 港股资讯 |\n| 102   | 美股资讯 |\n| 113   | 银行资讯 |\n| 115   | 保险资讯 |\n| 104   | 基金资讯 |\n| 503   | 私募资讯 |\n| 112   | 信托资讯 |\n| 007   | 外汇资讯 |\n| 107   | 期货资讯 |\n| 118   | 债券资讯 |\n| 603   | 券商资讯 |\n| 105   | 观点 |\n    ",
+        "maintainers": [
+          "p3psi-boo"
+        ],
+        "location": "index.ts"
+      }
+    },
+    "name": "金融界",
+    "url": "www.jrj.com.cn",
+    "description": "金融界是国内领先的金融信息服务平台，日均触达千万用户，年度访问量超过3亿，受众覆盖中国主流金融机构、上市公司和活跃投资理财群体",
     "lang": "zh-CN"
   },
   "jseea": {
@@ -48349,7 +49355,7 @@
           "GuoChen-thlg"
         ],
         "url": "kuaishou.com/profile/:principalId",
-        "description": ":::tip\nThe profile page of the user, which contains the user's information, videos, and other information.\n    :::",
+        "description": ":::tip\nThe profile page of the user, which contains the user's information, videos, and other information.\n:::",
         "location": "profile.ts"
       }
     },
@@ -55723,6 +56729,78 @@
     "url": "mohw.gov.tw",
     "lang": "zh-TW"
   },
+  "moodysmismicrosite": {
+    "routes": {
+      "/report/:industry?": {
+        "path": "/report/:industry?",
+        "categories": [
+          "finance"
+        ],
+        "view": 0,
+        "example": "/moodysmismicrosite/report/企业&金融机构",
+        "parameters": {
+          "industry": {
+            "description": "可选参数，默认为全部行业。行业选择，支持使用&连接多个。",
+            "options": [
+              {
+                "value": "0",
+                "label": "企业"
+              },
+              {
+                "value": "1",
+                "label": "金融机构"
+              },
+              {
+                "value": "2",
+                "label": "主权"
+              },
+              {
+                "value": "3",
+                "label": "地方政府及城投公司"
+              },
+              {
+                "value": "4",
+                "label": "宏观经济"
+              },
+              {
+                "value": "5",
+                "label": "结构融资"
+              },
+              {
+                "value": "6",
+                "label": "基础设施及项目融资"
+              },
+              {
+                "value": "7",
+                "label": "ESG"
+              },
+              {
+                "value": "8",
+                "label": "其他"
+              }
+            ],
+            "default": "全部"
+          }
+        },
+        "radar": [
+          {
+            "source": [
+              "www.moodysmismicrosite.com/report"
+            ]
+          }
+        ],
+        "name": "industry",
+        "description": "\n| ID | Description |\n| ---   | ---   |\n| 0 | 企业 |\n| 1 | 金融机构 |\n| 2 | 主权 |\n| 3 | 地方政府及城投公司 |\n| 4 | 宏观经济 |\n| 5 | 结构融资 |\n| 6 | 基础设施项目融资 |\n| 7 | ESG |\n| 8 | 其他 |\n    ",
+        "maintainers": [
+          "FYLSen"
+        ],
+        "location": "report.ts"
+      }
+    },
+    "name": "穆迪评级",
+    "url": "www.moodysmismicrosite.com",
+    "lang": "zh-CN"
+  },
   "mox": {
     "routes": {
       "/:category?": {
@@ -55890,6 +56968,47 @@
     "name": "华储网",
     "url": "mrm.com.cn",
     "lang": "zh-CN"
+  },
+  "msn": {
+    "routes": {
+      "/:market/:name/:id": {
+        "path": "/:market/:name/:id",
+        "parameters": {
+          "market": "Market code. Find it in MSN url, e.g. zh-tw",
+          "name": "Name of the channel. Find it in MSN url, e.g. Bloomberg",
+          "id": "ID of the channel (always starts with sr-vid). Find it in MSN url, e.g. sr-vid-08gw7ky4u229xjsjvnf4n6n7v67gxm0pjmv9fr4y2x9jjmwcri4s"
+        },
+        "categories": [
+          "traditional-media"
+        ],
+        "example": "/zh-tw/Bloomberg/sr-vid-08gw7ky4u229xjsjvnf4n6n7v67gxm0pjmv9fr4y2x9jjmwcri4s",
+        "description": "MSN News",
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true
+        },
+        "radar": [
+          {
+            "source": [
+              "www.msn.com/:market/channel/source/:name/:id"
+            ],
+            "target": "/:market/:name/:id"
+          }
+        ],
+        "name": "News",
+        "maintainers": [
+          "KTachibanaM"
+        ],
+        "location": "index.ts"
+      }
+    },
+    "name": "MSN",
+    "url": "msn.com",
+    "zh": {
+      "name": "MSN"
+    }
   },
   "mwm": {
     "routes": {
@@ -57852,6 +58971,27 @@
     },
     "name": "新华社",
     "url": "news.cn",
+    "lang": "zh-CN"
+  },
+  "newseed": {
+    "routes": {
+      "/latest": {
+        "path": "/latest",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/newseed/latest",
+        "url": "news.newseed.cn",
+        "name": "最新新闻",
+        "maintainers": [
+          "p3psi-boo"
+        ],
+        "location": "index.ts"
+      }
+    },
+    "name": "新芽",
+    "url": "newseed.cn",
+    "description": "新芽是专注于互联网创业的媒体平台，提供创业资讯、投融资信息、创业活动、创业服务等。",
     "lang": "zh-CN"
   },
   "newsmarket": {
@@ -61552,6 +62692,18 @@
   },
   "obsidian": {
     "routes": {
+      "/plugins": {
+        "path": "/plugins",
+        "name": "Obsidian Plugins",
+        "maintainers": [
+          "DIYgod"
+        ],
+        "categories": [
+          "program-update"
+        ],
+        "example": "/obsidian/plugins",
+        "location": "plugins.ts"
+      },
       "/publish/:id": {
         "path": "/publish/:id",
         "categories": [
@@ -63324,8 +64476,8 @@
   },
   "papers": {
     "routes": {
-      "/:category{.+}?": {
-        "path": "/:category{.+}?",
+      "/arxiv/:category{.+}?": {
+        "path": "/arxiv/:category{.+}?",
         "name": "Topic",
         "url": "papers.cool",
         "maintainers": [
@@ -63336,7 +64488,7 @@
         "parameters": {
           "category": "Category, arXiv Artificial Intelligence (cs.AI) by default"
         },
-        "description": ":::tip\n  If you subscribe to [arXiv Artificial Intelligence (cs.AI)](https://papers.cool/arxiv/cs.AI)，where the URL is `https://papers.cool/arxiv/cs.AI`, extract the part `https://papers.cool/` to the end, and use it as the parameter to fill in. Therefore, the route will be [`/papers/arxiv/cs.AI`](https://rsshub.app/papers/arxiv/cs.AI).\n  :::\n\n  | Category                                              | id          |\n  | ----------------------------------------------------- | ----------- |\n  | arXiv Artificial Intelligence (cs.AI)                 | arxiv/cs.AI |\n  | arXiv Computation and Language (cs.CL)                | arxiv/cs.CL |\n  | arXiv Computer Vision and Pattern Recognition (cs.CV) | arxiv/cs.CV |\n  | arXiv Machine Learning (cs.LG)                        | arxiv/cs.LG |\n  | arXiv Robotics (cs.RO)                                | arxiv/cs.RO |\n  ",
+        "description": ":::tip\n  If you subscribe to [arXiv Artificial Intelligence (cs.AI)](https://papers.cool/arxiv/cs.AI), where the URL is `https://papers.cool/arxiv/cs.AI`, extract the part `https://papers.cool/` to the end, and use it as the parameter to fill in. Therefore, the route will be [`/papers/arxiv/cs.AI`](https://rsshub.app/papers/arxiv/cs.AI).\n  :::\n\n  | Category                                              | id          |\n  | ----------------------------------------------------- | ----------- |\n  | arXiv Artificial Intelligence (cs.AI)                 | arxiv/cs.AI |\n  | arXiv Computation and Language (cs.CL)                | arxiv/cs.CL |\n  | arXiv Computer Vision and Pattern Recognition (cs.CV) | arxiv/cs.CV |\n  | arXiv Machine Learning (cs.LG)                        | arxiv/cs.LG |\n  | arXiv Robotics (cs.RO)                                | arxiv/cs.RO |\n  ",
         "categories": [
           "journal"
         ],
@@ -63387,6 +64539,41 @@
           }
         ],
         "location": "index.ts"
+      },
+      "/query/:keyword{.+}?": {
+        "path": "/query/:keyword{.+}?",
+        "name": "Topic",
+        "url": "papers.cool",
+        "maintainers": [
+          "Muyun99"
+        ],
+        "example": "/papers/query/Detection",
+        "parameters": {
+          "keyword": "Keyword to search for papers, e.g., Detection, Segmentation, etc."
+        },
+        "description": ":::tip\n  If you subscibe to [arXiv Paper queryed by Detection](https://papers.cool/arxiv/search?highlight=1&query=Detection), where the URL is `https://papers.cool/arxiv/search?highlight=1&query=Detection`, extract the part `https://papers.cool/` to the end, and use it as the parameter to fill in. Therefore, the route will be [`/papers/query/Detection`](https://rsshub.app/papers/query/Detection).\n  :::\n\n  | Category                                              | id                  |\n  | ----------------------------------------------------- | ------------------- |\n  | arXiv Paper queryed by Detection                      | query/Detection     |\n  | arXiv Paper queryed by Segmentation                   | query/Segmentation  |\n  ",
+        "categories": [
+          "journal"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": true
+        },
+        "radar": [
+          {
+            "title": "arXiv Paper queryed by Keyword",
+            "source": [
+              "papers.cool/arxiv/search?highlight=1&query=*&sort=0"
+            ],
+            "target": "/papers/query/:keyword"
+          }
+        ],
+        "location": "query.ts"
       }
     },
     "name": "Cool Papers",
@@ -72943,6 +74130,26 @@
         "description": "| 通知通告 | 新闻 | 政策文件(bug) |\n  | -------- | ---- | -------- |\n  | notice   | news | policy   |",
         "location": "jwb.ts"
       },
+      "/journals/society/current": {
+        "path": "/journals/society/current",
+        "categories": [
+          "journal"
+        ],
+        "example": "/journals/society/current",
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "《社会》杂志当期目录",
+        "maintainers": [
+          "CNYoki"
+        ],
+        "location": "society.ts"
+      },
       "/xykd/:type?": {
         "path": "/xykd/:type?",
         "categories": [
@@ -74327,7 +75534,24 @@
         ],
         "example": "/smzdm/haowen/1",
         "parameters": {
-          "day": "以天为时间跨度，默认为 `all`，其余可以选择 `1`，`7`，`30`，`365`"
+          "day": {
+            "description": "以天为时间跨度，默认为 `1`",
+            "options": [
+              {
+                "value": "1",
+                "label": "今日热门"
+              },
+              {
+                "value": "7",
+                "label": "周热门"
+              },
+              {
+                "value": "30",
+                "label": "月热门"
+              }
+            ],
+            "default": "1"
+          }
         },
         "features": {
           "requireConfig": false,
@@ -74339,7 +75563,8 @@
         },
         "name": "好文",
         "maintainers": [
-          "LogicJake"
+          "LogicJake",
+          "pseudoyu"
         ],
         "location": "haowen.ts"
       },
@@ -75197,6 +76422,69 @@
     },
     "name": "SpankBang",
     "url": "spankbang.com",
+    "lang": "en"
+  },
+  "spglobal": {
+    "routes": {
+      "/ratings/:language?": {
+        "path": "/ratings/:language?",
+        "categories": [
+          "finance"
+        ],
+        "view": 5,
+        "example": "/spglobal/ratings/en",
+        "parameters": {
+          "language": {
+            "description": "语言",
+            "options": [
+              {
+                "value": "zh",
+                "label": "中文"
+              },
+              {
+                "value": "en",
+                "label": "English"
+              },
+              {
+                "value": "es",
+                "label": "Español"
+              },
+              {
+                "value": "pt",
+                "label": "Português"
+              },
+              {
+                "value": "jp",
+                "label": "日本語"
+              },
+              {
+                "value": "ru",
+                "label": "Русский"
+              },
+              {
+                "value": "ar",
+                "label": "العربية"
+              }
+            ]
+          }
+        },
+        "radar": [
+          {
+            "source": [
+              "www.spglobal.com/ratings/:language"
+            ]
+          }
+        ],
+        "name": "Ratings",
+        "description": "\n| language | Description |\n| ---   | ---   |\n| zh | 中文 |\n| en | English |\n| es | Español |\n| pt | Português |\n| jp | 日本語 |\n| ru | Русский |\n| ar | العربية |\n    ",
+        "maintainers": [
+          "FYLSen"
+        ],
+        "location": "ratings.ts"
+      }
+    },
+    "name": "S&P Global",
+    "url": "www.spglobal.com",
     "lang": "en"
   },
   "spotify": {
@@ -82219,6 +83507,27 @@
     "url": "techpowerup.com",
     "lang": "en"
   },
+  "techsir": {
+    "routes": {
+      "/": {
+        "path": "/",
+        "categories": [
+          "new-media"
+        ],
+        "example": "/techsir",
+        "url": "www.techsir.com",
+        "name": "最新资讯",
+        "maintainers": [
+          "p3psi-boo"
+        ],
+        "location": "index.ts"
+      }
+    },
+    "name": "TechSir",
+    "url": "techsir.com",
+    "description": "科技先生 TechSir.Com 是新酷科技创新与创业媒体",
+    "lang": "zh-CN"
+  },
   "telecompaper": {
     "routes": {
       "/news/:caty/:year?/:country?/:type?": {
@@ -83766,6 +85075,41 @@
     "name": "THBWiki",
     "url": "thwiki.cc",
     "lang": "zh-CN"
+  },
+  "tiddlywiki": {
+    "routes": {
+      "/releases": {
+        "path": "/releases",
+        "categories": [
+          "program-update"
+        ],
+        "example": "/tiddlywiki/releases",
+        "url": "tiddlywiki.com",
+        "name": "Releases",
+        "maintainers": [
+          "p3psi-boo"
+        ],
+        "radar": [
+          {
+            "source": [
+              "github.com/TiddlyWiki/TiddlyWiki5"
+            ],
+            "target": "/releases"
+          },
+          {
+            "source": [
+              "tiddlywiki.com"
+            ],
+            "target": "/releases"
+          }
+        ],
+        "location": "releases.ts"
+      }
+    },
+    "name": "TiddlyWiki",
+    "url": "tiddlywiki.com",
+    "description": "",
+    "lang": "en"
   },
   "tiktok": {
     "routes": {
@@ -88832,6 +90176,27 @@
     "url": "voronoiapp.com",
     "lang": "en"
   },
+  "wabei": {
+    "routes": {
+      "/hot-recommend": {
+        "path": "/hot-recommend",
+        "categories": [
+          "finance"
+        ],
+        "example": "/wabei/hot-recommend",
+        "url": "www.wabei.cn",
+        "name": "热门推荐",
+        "maintainers": [
+          "p3psi-boo"
+        ],
+        "location": "index.ts"
+      }
+    },
+    "name": "挖贝网",
+    "url": "www.wabei.cn",
+    "description": "挖贝网专注于新三板、A股和港股报道",
+    "lang": "zh-CN"
+  },
   "wallhaven": {
     "routes": {
       "/search/:filter?/:needDetails?": {
@@ -89347,6 +90712,42 @@
     },
     "name": "Web3Caff",
     "url": "web3caff.com",
+    "lang": "en"
+  },
+  "webcatalog": {
+    "routes": {
+      "/changelog": {
+        "path": "/changelog",
+        "categories": [
+          "program-update"
+        ],
+        "example": "/webcatalog/changelog",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "desktop.webcatalog.io/:lang/changelog"
+            ]
+          }
+        ],
+        "name": "Changelog",
+        "maintainers": [
+          "Tsuyumi25"
+        ],
+        "url": "desktop.webcatalog.io/en/changelog",
+        "location": "changelog.ts"
+      }
+    },
+    "name": "WebCatalog",
+    "url": "desktop.webcatalog.io",
     "lang": "en"
   },
   "wechat": {
@@ -90428,6 +91829,38 @@
         ],
         "description": "\n\n|  分类名  | `type` 值 |  子类名  | `sub` 值 |\n| :------: | :-------- | :------: | :------- |\n|   首页   | `index`   |          |          |\n| 学院新闻 | `xyxw`    |   全部   | `all`    |\n|          |           | 学院要闻 | `xyyw`   |\n|          |           | 合作交流 | `hzjl`   |\n|          |           | 媒体聚焦 | `mtjj`   |\n|          |           | 学工要闻 | `xgyw`   |\n| 科学研究 | `kxyj`    |   全部   | `all`    |\n|          |           | 学术报告 | `xsbg`   |\n|          |           | 学术交流 | `xsjl`   |\n|          |           | 学术成果 | `kycg`   |\n|          |           | 申报信息 | `sbxx`   |\n| 通知公告 | `tzgg`    |   全部   | `all`    |\n|          |           | 学院通知 | `xytz`   |\n|          |           | 教学动态 | `jxdt`   |\n|          |           | 学术动态 | `xsdt`   |\n|          |           | 人才引进 | `rcyj`   |\n",
         "location": "rsgis.ts"
+      },
+      "/swrh/:type": {
+        "path": "/swrh/:type",
+        "categories": [
+          "university"
+        ],
+        "example": "/whu/swrh/2",
+        "radar": [
+          {
+            "source": [
+              "swrh.whu.edu.cn/:type"
+            ],
+            "target": "/swrh/:type"
+          }
+        ],
+        "parameters": {
+          "type": "公告类型，详见表格"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "水利水电学院公告",
+        "maintainers": [
+          "FanofZY"
+        ],
+        "description": "| 公告类型 | 学院新闻 | 学术科研 | 通知公告 |\n  | -------- | -------- | -------- | -------- |\n  | 参数     | 0        | 1        | 2        |",
+        "location": "swrh.ts"
       },
       "/gs/:type?": {
         "path": "/gs/:type?",
@@ -92547,7 +93980,7 @@
         "features": {
           "requireConfig": false,
           "requirePuppeteer": false,
-          "antiCrawler": false,
+          "antiCrawler": true,
           "supportBT": false,
           "supportPodcast": false,
           "supportScihub": false
@@ -92561,7 +93994,8 @@
         ],
         "name": "用户专栏",
         "maintainers": [
-          "TonyRL"
+          "TonyRL",
+          "pseudoyu"
         ],
         "location": "column.ts"
       },
@@ -94312,7 +95746,8 @@
         "radar": [
           {
             "source": [
-              "www.youtube.com/user/:username"
+              "www.youtube.com/user/:username",
+              "www.youtube.com/:username"
             ],
             "target": "/user/:username"
           }
@@ -94777,24 +96212,45 @@
   },
   "zaker": {
     "routes": {
-      "/:type/:id?": {
-        "path": "/:type/:id?",
+      "/channel/:id?": {
+        "path": "/channel/:id?",
+        "parameters": {
+          "id": "分类 ID，可在 URL 中找到，默认为 `1`"
+        },
         "radar": [
           {
             "source": [
-              "myzaker.com/:type/:id"
+              "www.myzaker.com/channel/:id"
             ],
-            "target": "/:type/:id"
+            "target": "/channel/:id"
           }
         ],
-        "name": "Unknown",
+        "name": "分类",
+        "example": "/zaker/channel/13",
         "maintainers": [
           "LogicJake",
           "kt286",
+          "TonyRL"
+        ],
+        "location": "channel.ts"
+      },
+      "/focusread": {
+        "path": "/focusread",
+        "radar": [
+          {
+            "source": [
+              "www.myzaker.com/"
+            ],
+            "target": "/focusread"
+          }
+        ],
+        "name": "精读",
+        "example": "/zaker/focusread",
+        "maintainers": [
           "AlexdanerZe",
           "TonyRL"
         ],
-        "location": "index.ts"
+        "location": "focus.ts"
       }
     },
     "name": "ZAKER",
